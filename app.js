@@ -20,7 +20,7 @@ var store = new Vue ({
     },
     created: function() {
         console.log('requesting all Lessons from server')
-            fetch('http://localhost:5100/collection/lessons').then(
+            fetch('https://cw2webapplication.herokuapp.com/collection/lessons').then(
                 function(response) {
                     response.json().then(
                         function(json){
@@ -32,7 +32,7 @@ var store = new Vue ({
             )
 
             console.log('requesting all Users from server')
-            fetch('http://localhost:5100/collection/orders').then(
+            fetch('https://cw2webapplication.herokuapp.com/collection/orders').then(
                 function(response) {
                     response.json().then(
                         function(json){
@@ -43,7 +43,7 @@ var store = new Vue ({
                 }
             )
             console.log('requesting all Users from server')
-            fetch('http://localhost:5100/collection/orders').then(
+            fetch('https://cw2webapplication.herokuapp.com/collection/orders').then(
                 function(response) {
                     response.json().then(
                         function(json){
@@ -103,7 +103,7 @@ var store = new Vue ({
             if(num.value.match(integers) && lett.value.match(letters)){                     
                 if( this.checkout.Name != '' && this.checkout.Phone_No != null){
                     if(this.checkout.Name === this.currentUserId.Name){
-                        fetch('http://localhost:5100/collection/orders' + this.currentUserId._id , {
+                        fetch('https://cw2webapplication.herokuapp.com/collection/orders' + this.currentUserId._id , {
                             method: 'PUT',
                             body: JSON.stringify(this.checkout),
                             headers: {'Content-Type': 'application/json' }
@@ -113,7 +113,7 @@ var store = new Vue ({
                     }
                     else{    
                         console.log("posting")                
-                        fetch('http://localhost:5100/collection/orders', {
+                        fetch('https://cw2webapplication.herokuapp.com/collection/orders', {
                             method: 'POST',
                             headers: {'Content-Type': 'application/json' },
                             body: JSON.stringify(this.checkout)
