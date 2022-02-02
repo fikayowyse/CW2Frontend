@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <title>After School Learning</title>
+</head>
+<body>
+    <div class="container" id="app"> 
+        
+
+        <div class="header" >
+            <div class="sort" >
+                   <select name="sortBy" id="select" v-model="sortBy" >
+                    <option value="subject">Sort by Subject</option>
+                    <option value="location">Sort by Location</option>
+                    <option value="price">Sort by Price</option>
+                    <option value="availability">Sort by Availability</option>
+                    </select>
+                    <select name="orderby" id="orderBy" v-model="orderBy">
+                        <option value="ascending" >Ascending</option>
+                        <option value="descending">Descending</option>
+                    </select>
+                </div>
+
+                <form action="" class="search">
+                    <input type="text" v-model="searchValue"  placeholder="Search for a lesson"></a>
+                </form>
+
+                <button class="cart-btn" value="add" v-if="cart.length === 0 && showProduct !== false" disabled>
+                    Cart&nbsp;&nbsp;{{cartItemCount}}&nbsp;
+                    <span class="fas fa-cart-plus"></span>                    
+                </button> 
+                <button class="cart-btn" value="add" v-on:click="showCheckout" v-else>
+                    Cart&nbsp;&nbsp;{{cartItemCount}}&nbsp;
+                    <span class="fas fa-cart-plus"></span>                    
+                </button> 
+            <hr >      
+        </div>    
+        <div v-if='showProduct'>
+            <div class="courses">
+                <div v-for="lesson in sorted" :key="lesson._id" class="course">
+                        <img v-bind:src="lesson.image" alt="img" class="image">
+                        <p><strong>Subject: </strong>{{lesson.subject}}</p>
+                        <p><strong>Location: </strong>{{lesson.location}}</p>
+                        <p><strong>Price: </strong><i class="fa-solid fa-dollar-sign"></i> {{lesson.price}}.00</p>
+                        <p><strong>Available spaces: </strong>{{lesson.spaces}}</p>
+                        <button class="btn"  @click="addToCart(lesson)" v-if='canAddToCart(lesson)'>Add to Cart</button>
+                        <button disabled ='disabled' v-else>Add to Cart</button>
+                        <span v-if="lesson.availableInventory === cartCount(lesson.id)">
+                            Sold out!
+                        </span>
+                </div>
+            </div>
+        </div>
+
+        <div v-else>
+
+            <div class="checkout">
+                <div class="courses">
+                    <div v-for="lesson in cart" class="course">
+                        <img v-bind:src="lesson.image" alt="img" class="image">
+                        <p><strong>Subject: </strong>{{lesson.subject}}</p>
+                        <p><strong>Location: </strong>{{lesson.location}}</p>
+                        <p id="spaces">numberPurchased: {{lesson.numberPurchased}}</p>
+                        <p><strong>Price: </strong><i class="fa-solid fa-dollar-sign"></i> {{lesson.price}}.00</p>
+                        <button class="btn" @click="removeFromCart(lesson)">Remove</button>
+                    </div>
+                </div>
+                <form class="submit">                    
+                    <input type="text" placeholder="Name" id="letters"  v-model="checkout.Name"/>
+                    <input type="text" name="pNo" placeholder="Phone Number" id="pNo" v-model="checkout.Phone_No"/>
+                    <button type="submit" class="submitBtn" id="btnSub" v-on:click="isNumber" >Checkout</button>
+                </form>
+                
+            </div>
+        </div>
+            
+
+    </div>
+    
+
+
+    <!-- <script src="script/lessons.js"></script> -->
+	<script src="server.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
